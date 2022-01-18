@@ -645,23 +645,24 @@ namespace FTIGlobal
             return netMatrix;
         }
 
-        public static List<ColumnsInfor> GetColumnsInforMatrixs(Matrix netMatrix)
+        public static Dictionary<string, ColumnsInfor> GetColumnsInforMatrixs(Matrix netMatrix)
         {
-            List<ColumnsInfor> columnsInfors = new List<ColumnsInfor>();
+            var columnsInfors = new Dictionary<string, ColumnsInfor>();
+            var iD = "";
+            var alias = "";
+            MatrixColumnInfoDataBind dataBind = null;
             for (var i = 0; i < netMatrix.ColumnsInfo.Length; i++)
             {
-                var dataBind = netMatrix.ColumnsInfo[i].DataBind;
+                dataBind = netMatrix.ColumnsInfo[i].DataBind;
                 if (dataBind != null)
                 {
-                    var iD = netMatrix.ColumnsInfo[i].UniqueID;
-                    //var tableName = dataBind.TableName;
-                    var aliasName = dataBind.Alias;
-                    columnsInfors.Add(new ColumnsInfor()
+                    iD = netMatrix.ColumnsInfo[i].UniqueID;
+                    alias = dataBind.Alias;
+                    columnsInfors.Add(iD, new ColumnsInfor()
                     {
                         ID = iD,
-                        //TableName = tableName,
-                        Alias = aliasName,
                         IndexCloumn = i,
+                        Alias = alias,
                     });
                 }
             }
